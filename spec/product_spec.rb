@@ -21,25 +21,39 @@ describe Product do
     end
   end
 
-  context "The maximum allowed connections for a" do
-    it "free account is 100" do
-      Product.new('free').max_connections_allowed.should eq 100
+  [
+    {:product => @free, :name => 'free', :connections => 100},
+    {:product => @bronze, :name => 'bronze', :connections => 500},
+    {:product => @silver, :name => 'silver', :connections => 1500},
+    {:product => @gold, :name => 'gold', :connections => 5000},
+    {:product => @platinum, :name => 'platinum', :connections => 999_999_999}
+  ].each do |tiers|
+    context "The maximum allowed connections for a" do
+      it "#{tiers[:name]} account is #{tiers[:connections]}" do
+        tiers[:product].max_connections_allowed.should eq tiers[:connections]
+      end
+    end
+  end
+
+  context "The features allowed for a" do
+    it "free account are Twitter, Facebook, and Github integration" do
+      Product.new('free').features.should include 'Twitter', 'Facebook', 'Github'
     end
 
-    it "bronze account is 100" do
-      Product.new('bronze').max_connections_allowed.should eq 500
+    it "bronze account are Twitter, Facebook, and Github integration" do
+      Product.new('bronze').features.should include 'Twitter', 'Facebook', 'Github'
     end
 
-    it "silver account is 100" do
-      Product.new('silver').max_connections_allowed.should eq 1500
+    it "silver account are Twitter, Facebook, Github, and Linkedin integration" do
+      Product.new('silver').features.should include 'Twitter', 'Facebook', 'Github', 'Linkedin'
     end
 
-    it "gold account is 100" do
-      Product.new('gold').max_connections_allowed.should eq 5000
+    it "gold account are Twitter, Facebook, Github, and Linkedin integration" do
+      Product.new('gold').features.should include 'Twitter', 'Facebook', 'Github', 'Linkedin'
     end
 
-    it "platinum account is 100" do
-      Product.new('platinum').max_connections_allowed.should eq 999_999_999
+    it "platinum account are Twitter, Facebook, Github, and Linkedin integration" do
+      Product.new('platinum').features.should include 'Twitter', 'Facebook', 'Github', 'Linkedin'
     end
   end
 end

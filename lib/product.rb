@@ -1,51 +1,100 @@
+module ProductType
+  class Free
+    def price
+      0
+    end
+
+    def max_connections_allowed
+      100
+    end
+
+    def features
+      ['Twitter', 'Facebook', 'Github']
+    end
+  end
+
+  class Bronze
+    def price
+      10
+    end
+
+    def max_connections_allowed
+      500
+    end
+
+    def features
+      ['Twitter', 'Facebook', 'Github']
+    end
+  end
+
+  class Silver
+    def price
+      25
+    end
+
+    def max_connections_allowed
+      1500
+    end
+
+    def features
+      ['Twitter', 'Facebook', 'Github', 'Linkedin']
+    end
+  end
+
+  class Gold
+    def price
+      50
+    end
+
+    def max_connections_allowed
+      5000
+    end
+
+    def features
+      ['Twitter', 'Facebook', 'Github', 'Linkedin']
+    end
+  end
+
+  class Platinum
+    def price
+      100
+    end
+
+    def max_connections_allowed
+      999_999_999
+    end
+
+    def features
+      ['Twitter', 'Facebook', 'Github', 'Linkedin']
+    end
+  end
+end
+
 class Product
   def initialize(type)
-    @type = type
+    case type
+    when 'free'
+      @type = ProductType::Free.new
+    when 'bronze'
+      @type = ProductType::Bronze.new
+    when 'silver'
+      @type = ProductType::Silver.new
+    when 'gold'
+      @type = ProductType::Gold.new
+    when 'platinum'
+      @type = ProductType::Platinum.new
+    end
   end
 
   def price
-    case @type
-    when 'free'
-      0
-    when 'bronze'
-      10
-    when 'silver'
-      25
-    when 'gold'
-      50
-    when 'platinum'
-      100
-    end
+    @type.price
   end
 
   def max_connections_allowed
-    case @type
-    when 'free'
-      100
-    when 'bronze'
-      500
-    when 'silver'
-      1500
-    when 'gold'
-      5000
-    when 'platinum'
-      999_999_999
-    end
+    @type.max_connections_allowed
   end
 
   def features
-    
-    case @type
-    when 'free'
-      ['Twitter', 'Facebook', 'Github']
-    when 'bronze'
-      ['Twitter', 'Facebook', 'Github']
-    when 'silver'
-      ['Twitter', 'Facebook', 'Github', 'Linkedin']
-    when 'gold'
-      ['Twitter', 'Facebook', 'Github', 'Linkedin']
-    when 'platinum'
-      ['Twitter', 'Facebook', 'Github', 'Linkedin']
-    end
+    @type.features
   end
 end

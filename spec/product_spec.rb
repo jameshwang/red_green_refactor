@@ -20,4 +20,26 @@ describe Product do
       end
     end
   end
+
+  context "The maximum allowed connections for a" do
+    it "free account is 100" do
+      Product.new('free').max_connections_allowed.should eq 100
+    end
+
+    it "bronze account is 100" do
+      Product.new('bronze').max_connections_allowed.should eq 500
+    end
+
+    it "silver account is 100" do
+      Product.new('silver').max_connections_allowed.should eq 1500
+    end
+
+    it "gold account is 100" do
+      Product.new('gold').max_connections_allowed.should eq 5000
+    end
+
+    it "platinum account is 100" do
+      Product.new('platinum').max_connections_allowed.should eq 999_999_999
+    end
+  end
 end
